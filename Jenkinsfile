@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('git scm update') {
       steps {
-        git url: 'https://github.com/mid7098/cicdtest.git', branch: 'master'
+        git url: 'https://github.com/DGD99/cicdtest.git', branch: 'master'
       }
     }
     stage('docker build and push') {
