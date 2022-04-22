@@ -9,8 +9,12 @@ pipeline {
     stage('docker build and push') {
       steps {
         sh '''
-        sudo docker build -t mid7098/testweb:newnewmain .
-        sudo docker push mid7098/testweb:newnewmain
+	sudo sed -i 's/MAIN/blog/' index.html
+        sudo docker build -t mid7098/testweb:newblog .
+        sudo docker push mid7098/testweb:newblog
+	sudo sed -i 's/blog/shop/' index.html
+        sudo docker build -t mid7098/testweb:newshop .
+        sudo docker push mid7098/testweb:newshop
         '''
       }
     }
@@ -18,7 +22,8 @@ pipeline {
       steps {
         sh '''
         sudo kauth
-	sudo kubectl set image deployment deploy-main ctn-main=mid7098/testweb:newnewmain
+	sudo kubectl set image deployment deploy-blog ctn-blog=mid7098/testweb:newblog
+	sudo kubectl set image deployment deploy-shop ctn-shop=mid7098/testweb:newshop
         '''
       }
     }
